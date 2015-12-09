@@ -2,8 +2,8 @@ class SafeForWorkUsernameValidator < ActiveModel::Validator
   BAD_WORDS = %w(darn gosh heck golly)
 
   def validate(record)
-    if username.include?(BAD_WORDS) # undefined method
-      errors.add(:username, "Naughty words are not allowed!")
+    if BAD_WORDS.any? { |word| record.username.include?(word) }
+      record.errors.add(:username, "cannot contain naughty words!")
     end
   end
 end
